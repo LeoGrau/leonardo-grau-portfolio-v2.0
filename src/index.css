@@ -1,1 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import "tailwindcss";
+
+:root.dark {
+  --bg-background: var(--color-neutral-900);
+  --text-color: var(--color-neutral-50);
+}
+
+:root {
+  --bg-background: var(--color-white);
+  --text-color: var(--color-neutral-50);
+}
+
+html {
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg-background);
+  color: var(--text-color);
+}
+
+.quantico-f {
+  font-family: "Quantico", sans-serif;
+}
