@@ -1,4 +1,4 @@
-import type { NavOption } from "../shared/types/nav-option.type";
+import type { NavOption } from "../../shared/types/nav-option.type";
 
 export function Navbar() {
   const navOptions: NavOption[] = [
@@ -14,7 +14,7 @@ export function Navbar() {
   ];
 
   return (
-    <div className="h-17.5 backdrop-blur-lg fixed z-50 w-full items-center px-5 flex justify-between">
+    <div className="h-17.5 backdrop-blur-lg fixed top-0 z-50 w-full items-center px-5 flex justify-between">
       <ul className="quantico-f flex gap-4">
         {navOptions.map((option, index) => (
           <li className="text-sm" key={index}>
