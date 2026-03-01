@@ -23,7 +23,7 @@ import { SolidityIcon } from "../../icons/color/SolidityIcon";
 import { CSharpIcon } from "../../icons/color/CSharpIcon";
 import { PythonIcon } from "../../icons/color/PythonIcon";
 import { JavaScriptIcon } from "../../icons/color/JavaScriptIcon";
-import { TypeScriptIcon } from "../../icons/color/TypescriptIcon";
+import { TypeScriptIcon } from "../../icons/color/TypeScriptIcon";
 import { CPPIcon } from "../../icons/color/CPPIcon";
 
 export function Skills() {
