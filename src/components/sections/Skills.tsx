@@ -1,245 +1,253 @@
 import { SkillCard } from "../cards/skill-card/SkillCard";
-import { VueIcon } from "../../icons/color/VueIcon";
-import { ReactIcon } from "../../icons/color/ReactIcon";
-import { AngularIcon } from "../../icons/color/AngularIcon";
-import { TailwindCSSIcon } from "../../icons/color/TailwindCSSIcon";
-import { PiniaIcon } from "../../icons/color/PiniaIcon";
-import { DotnetIcon } from "../../icons/color/DotnetIcon";
-import { BootstrapIcon } from "../../icons/color/BootstrapIcon";
-import { ViteIcon } from "../../icons/color/ViteIcon";
-import { DockerIcon } from "../../icons/color/DockerIcon";
-import { LinuxIcon } from "../../icons/color/LinuxIcon";
-import { GitIcon } from "../../icons/color/GitIcon";
-import { PostgreSQLIcon } from "../../icons/color/PostgreSQLIcon";
-import { MySQLIcon } from "../../icons/color/MySQLIcon";
-import { SQLServerIcon } from "../../icons/color/SQLServerIcon";
-import { SwaggerIcon } from "../../icons/color/SwaggerIcon";
-import { NestJSIcon } from "../../icons/color/NestJSIcon";
-import { PrismaIcon } from "../../icons/color/PrismaIcon";
-import { HTML5Icon } from "../../icons/color/HTMLIcon";
-import { CSSIcon } from "../../icons/color/CSSIcon";
-import { BesuIcon } from "../../icons/color/BesuIcon";
-import { SolidityIcon } from "../../icons/color/SolidityIcon";
-import { CSharpIcon } from "../../icons/color/CSharpIcon";
-import { PythonIcon } from "../../icons/color/PythonIcon";
-import { JavaScriptIcon } from "../../icons/color/JavaScriptIcon";
-import { TypeScriptIcon } from "../../icons/color/TypeScriptIcon";
-import { CPPIcon } from "../../icons/color/CPPIcon";
+import { useEffect, useState } from "react";
+import { SkillService } from "../../services/skills/skills.service";
+import type { Skill } from "../../models/skill.model";
+import { SkillTypes } from "../../services/skills/queries/skill.query";
 
+const skillService = new SkillService();
 export function Skills() {
-  const fSkills = [
-    {
-      id: "html5",
-      iconComponent: <HTML5Icon width={16} />,
-      label: "HTML",
-      level: "Advanced",
-    },
-    {
-      id: "css",
-      iconComponent: <CSSIcon width={16} />,
-      label: "CSS",
-      level: "Advanced",
-    },
-    {
-      id: "react",
-      iconComponent: <ReactIcon width={16} />,
-      label: "React",
-      level: "Advanced",
-    },
-    {
-      id: "vue",
-      iconComponent: <VueIcon width={16} />,
-      label: "Vue",
-      level: "Advanced",
-    },
-    {
-      id: "angular",
-      iconComponent: <AngularIcon width={16} />,
-      label: "Angular",
-      level: "Advanced",
-    },
-    {
-      id: "tailwindcss",
-      iconComponent: <TailwindCSSIcon width={16} />,
-      label: "TailwindCSS",
-      level: "Advanced",
-    },
-    {
-      id: "pinia",
-      iconComponent: <PiniaIcon width={16} />,
-      label: "Pinia",
-      level: "Advanced",
-    },
-    {
-      id: "bootstrap",
-      iconComponent: <BootstrapIcon width={16} />,
-      label: "Bootstrap",
-      level: "Advanced",
-    },
-    {
-      id: "vite",
-      iconComponent: <ViteIcon width={16} />,
-      label: "Vite",
-      level: "Advanced",
-    },
-  ];
+  // Services
 
-  const bSkills = [
-    {
-      id: "dotnet",
-      iconComponent: <DotnetIcon width={16} />,
-      label: ".NET",
-      level: "Advanced",
-    },
-    {
-      id: "dotnet",
-      label: "ASP.NET Core Web API",
-      level: "Advanced",
-    },
-    {
-      id: "linq",
-      label: "LINQ",
-      level: "Advanced",
-    },
-    {
-      id: "efcore",
-      label: "EF Core",
-      level: "Advanced",
-    },
-    {
-      id: "automapper",
-      label: "AutoMapper",
-      level: "Advanced",
-    },
-    {
-      id: "jwtBearer",
-      label: "JWT Bearer Auth",
-      level: "Advanced",
-    },
-    {
-      id: "dependencyInjection",
-      label: "Dependency Injection",
-      level: "Advanced",
-    },
-    {
-      id: "swagger",
-      iconComponent: <SwaggerIcon width={16}></SwaggerIcon>,
-      label: "SwaggerUI",
-      level: "Advanced",
-    },
-    {
-      id: "nestjs",
-      iconComponent: <NestJSIcon width={16}></NestJSIcon>,
-      label: "NestJS",
-      level: "Advanced",
-    },
-    {
-      id: "prisma",
-      iconComponent: <PrismaIcon width={16}></PrismaIcon>,
-      label: "Prisma ORM",
-      level: "Advanced",
-    },
-  ];
+  const [fskills, setFskills] = useState([]);
+  const [bskills, setBskills] = useState([]);
 
-  const dSkills = [
-    {
-      id: "docker",
-      iconComponent: <DockerIcon width={16} />,
-      label: "Docker",
-      level: "Advanced",
-    },
-    {
-      id: "linux",
-      iconComponent: <LinuxIcon width={16} />,
-      label: "Linux Servers",
-      level: "Advanced",
-    },
-    {
-      id: "awsec2",
-      label: "AWS - EC2 Instances",
-      level: "Advanced",
-    },
-    {
-      id: "git",
-      iconComponent: <GitIcon width={16}></GitIcon>,
-      label: "Git",
-      level: "Advanced",
-    },
-  ];
+  useEffect(() => {
+    const fetchSkills = async () => {
+      const [_fskills, _bskills] = await Promise.all([
+        skillService
+          .getSkills({ skill_type: SkillTypes.Frontend })
+          .then((res) => res.data),
+        skillService
+          .getSkills({ skill_type: SkillTypes.Backend })
+          .then((res) => res.data),
+      ]);
 
-  const dbSkills = [
-    {
-      id: "mysql",
-      iconComponent: <MySQLIcon width={16} />,
-      label: "MySQL",
-      level: "Advanced",
-    },
-    {
-      id: "postgresql",
-      iconComponent: <PostgreSQLIcon width={16} />,
-      label: "PostgreSQL",
-      level: "Advanced",
-    },
-    {
-      id: "sqlserver",
-      iconComponent: <SQLServerIcon width={16} />,
-      label: "SQL Server",
-      level: "Advanced",
-    },
-  ];
+      setFskills(_fskills)
+      setBskills(_bskills)
+    };
 
-  const blockSkills = [
-    {
-      id: "hyperledgerbesu",
-      iconComponent: <BesuIcon width={18} />,
-      label: "Hyperledger Besu",
-      level: "Advanced",
-    },
-    {
-      id: "solidity",
-      iconComponent: <SolidityIcon width={22} />,
-      label: "Solidity",
-      level: "Advanced",
-    },
-    {
-      id: "etherjs",
-      label: "Ethers.js",
-      level: "Advanced",
-    },
-  ];
+    fetchSkills();
 
-  const plSkills = [
-    {
-      id: "c#",
-      iconComponent: <CSharpIcon width={18} />,
-      label: "C#",
-      level: "Advanced",
-    },
-    {
-      id: "typescript",
-      iconComponent: <TypeScriptIcon width={18} />,
-      label: "Typescript",
-      level: "Advanced",
-    },
-    {
-      id: "javascript",
-      iconComponent: <JavaScriptIcon width={18} />,
-      label: "Javascript",
-      level: "Advanced",
-    },
-    {
-      id: "python",
-      iconComponent: <PythonIcon width={18} />,
-      label: "Python",
-      level: "Advanced",
-    },
-    {
-      id: "cpp",
-      iconComponent: <CPPIcon width={18} />,
-      label: "C++",
-      level: "Advanced",
-    },
-  ];
+    return () => {
+      console.log("Destroyed component 💥");
+    };
+  }, []);
+
+  // const fSkills = [
+  //   {
+  //     id: "html5",
+  //     iconComponent: <HTML5Icon width={16} />,
+  //     label: "HTML",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "css",
+  //     iconComponent: <CSSIcon width={16} />,
+  //     label: "CSS",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "react",
+  //     iconComponent: <ReactIcon width={16} />,
+  //     label: "React",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "vue",
+  //     iconComponent: <VueIcon width={16} />,
+  //     label: "Vue",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "angular",
+  //     iconComponent: <AngularIcon width={16} />,
+  //     label: "Angular",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "tailwindcss",
+  //     iconComponent: <TailwindCSSIcon width={16} />,
+  //     label: "TailwindCSS",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "pinia",
+  //     iconComponent: <PiniaIcon width={16} />,
+  //     label: "Pinia",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "bootstrap",
+  //     iconComponent: <BootstrapIcon width={16} />,
+  //     label: "Bootstrap",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "vite",
+  //     iconComponent: <ViteIcon width={16} />,
+  //     label: "Vite",
+  //     level: "Advanced",
+  //   },
+  // ];
+
+  // const bSkills = [
+  //   {
+  //     id: "dotnet",
+  //     iconComponent: <DotnetIcon width={16} />,
+  //     label: ".NET",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "dotnet",
+  //     label: "ASP.NET Core Web API",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "linq",
+  //     label: "LINQ",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "efcore",
+  //     label: "EF Core",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "automapper",
+  //     label: "AutoMapper",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "jwtBearer",
+  //     label: "JWT Bearer Auth",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "dependencyInjection",
+  //     label: "Dependency Injection",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "swagger",
+  //     iconComponent: <SwaggerIcon width={16}></SwaggerIcon>,
+  //     label: "SwaggerUI",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "nestjs",
+  //     iconComponent: <NestJSIcon width={16}></NestJSIcon>,
+  //     label: "NestJS",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "prisma",
+  //     iconComponent: <PrismaIcon width={16}></PrismaIcon>,
+  //     label: "Prisma ORM",
+  //     level: "Advanced",
+  //   },
+  // ];
+
+  // const dSkills = [
+  //   {
+  //     id: "docker",
+  //     iconComponent: <DockerIcon width={16} />,
+  //     label: "Docker",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "linux",
+  //     iconComponent: <LinuxIcon width={16} />,
+  //     label: "Linux Servers",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "awsec2",
+  //     label: "AWS - EC2 Instances",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "git",
+  //     iconComponent: <GitIcon width={16}></GitIcon>,
+  //     label: "Git",
+  //     level: "Advanced",
+  //   },
+  // ];
+
+  // const dbSkills = [
+  //   {
+  //     id: "mysql",
+  //     iconComponent: <MySQLIcon width={16} />,
+  //     label: "MySQL",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "postgresql",
+  //     iconComponent: <PostgreSQLIcon width={16} />,
+  //     label: "PostgreSQL",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "sqlserver",
+  //     iconComponent: <SQLServerIcon width={16} />,
+  //     label: "SQL Server",
+  //     level: "Advanced",
+  //   },
+  // ];
+
+  // const blockSkills = [
+  //   {
+  //     id: "hyperledgerbesu",
+  //     iconComponent: <BesuIcon width={18} />,
+  //     label: "Hyperledger Besu",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "solidity",
+  //     iconComponent: <SolidityIcon width={22} />,
+  //     label: "Solidity",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "etherjs",
+  //     label: "Ethers.js",
+  //     level: "Advanced",
+  //   },
+  // ];
+
+  // const plSkills = [
+  //   {
+  //     id: "c#",
+  //     iconComponent: <CSharpIcon width={18} />,
+  //     label: "C#",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "typescript",
+  //     iconComponent: <TypeScriptIcon width={18} />,
+  //     label: "Typescript",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "javascript",
+  //     iconComponent: <JavaScriptIcon width={18} />,
+  //     label: "Javascript",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "python",
+  //     iconComponent: <PythonIcon width={18} />,
+  //     label: "Python",
+  //     level: "Advanced",
+  //   },
+  //   {
+  //     id: "cpp",
+  //     iconComponent: <CPPIcon width={18} />,
+  //     label: "C++",
+  //     level: "Advanced",
+  //   },
+  // ];
+
+  // console.log(skills.filter(s => s.skill_type == 'Frontend'))
 
   return (
     <section className="flex justify-center items-center min-h-screen">
@@ -249,10 +257,10 @@ export function Skills() {
           <div className="flex flex-col gap-2">
             <h3 className="text-zinc-500">Frontend</h3>
             <div className="grid grid-cols-5 gap-3">
-              {fSkills.map((skill) => (
+              {fskills.map((skill: Skill, index) => (
                 <SkillCard
-                  label={skill.label}
-                  iconComponent={skill.iconComponent}
+                  label={skill.name}
+                  key={index}
                 ></SkillCard>
               ))}
             </div>
@@ -260,15 +268,12 @@ export function Skills() {
           <div className="flex flex-col gap-2">
             <h3 className="text-zinc-500">Backend</h3>
             <div className="grid grid-cols-5 gap-3">
-              {bSkills.map((skill) => (
-                <SkillCard
-                  label={skill.label}
-                  iconComponent={skill.iconComponent}
-                ></SkillCard>
+              {bskills.map((skill: Skill, index: number) => (
+                <SkillCard label={skill.name} key={index}></SkillCard>
               ))}
             </div>
           </div>
-          <div className="flex flex-col gap-2">
+          {/* <div className="flex flex-col gap-2">
             <h3 className="text-zinc-500">DevOps - Cloud & Deployment</h3>
             <div className="grid grid-cols-5 gap-3">
               {dSkills.map((skill) => (
@@ -311,7 +316,7 @@ export function Skills() {
                 ></SkillCard>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
